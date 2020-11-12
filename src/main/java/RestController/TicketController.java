@@ -131,9 +131,9 @@ public class TicketController {
 	{
 		try
 		{ 
-			return  "\nTicketID: " + ticket.getId() + "\n" + "Requester ID: "+ ticket.getRequesterId() + "\n" + "Submitter ID: " + ticket.getSubmitterId() + "\n"  
-					+ "Created at: " + ticket.getCreatedAt() + "\n" + "Updated at: " + ticket.getUpdatedAt() + "\n" 
-					+ "Subject: " + ticket.getSubject() + "\n" + "Ticket description: " + ticket.getDescription() + "\n";
+			return  "\r\nTicketID: " + ticket.getId() + "\r\n" + "Requester ID: "+ ticket.getRequesterId() + "\r\n" + "Submitter ID: " + ticket.getSubmitterId() + "\r\n"  
+					+ "Created at: " + ticket.getCreatedAt() + "\r\n" + "Updated at: " + ticket.getUpdatedAt() + "\r\n" 
+					+ "Subject: " + ticket.getSubject() + "\r\n" + "Ticket description: " + ticket.getDescription() + "\r\n";
 					
 					 
 		}

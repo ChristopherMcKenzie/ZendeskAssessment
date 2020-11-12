@@ -1,52 +1,53 @@
 package Run;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import RestController.*;
 import picocli.CommandLine;
 import picocli.CommandLine.*;
 
-@Command(name = "ASCIIArt", version = "ASCIIArt 1.0", mixinStandardHelpOptions = true) 
 
-public class Main implements Runnable{
+public class Main{
 	public static void main(String[] args){
 		
 		Scanner sc = new Scanner(System.in);
 		
 		TicketController tc = new TicketController();
 		tc.Init();
-	//	tc.GetAllTickets();
-		//System.out.println(tc.DisplayAllTickets(1));
+
 		
-		System.out.print("Welcome to Zendesk Assessment.\nSelect a command to continue\nValid Commands\n"
-				+ "All Tickets\n"
-				+ "Single Ticket\n"
+		System.out.print("Welcome to Zendesk Assessment.\r\nSelect a command to continue\r\nValid Commands\r\n"
+				+ "All Tickets\r\n"
+				+ "Single Ticket\r\n"
 				+ "Exit - allows you end the program");
 		
 		int ticketNum;
 		int pageNum = 1;
 		boolean flag = true;
-		boolean flag2 = true;
+		boolean allTicketsFlag = true;
+		boolean singleTicketFlag = true;
 
 		do
 		{
+			//Bug here where when the loop restarts using "back" it takes in a command and brings it down to default
+			//the issue is "nextLine()" should be next but that casuses other issues
+			
 			String input = sc.nextLine().toLowerCase().trim();
 
 			switch(input)
 			{
-				case "alltickets":			
+				case "all tickets":			
 
 					System.out.println(tc.DisplayAllTickets(pageNum));
-					System.out.println("Next/Prev to change pages");
+					System.out.println("Next/Prev to change pages\r\nBack to leave this menu");
 
-					input = sc.nextLine();
+					input = sc.next().toLowerCase().trim();
 
 					do
 					{
 						switch(input)
-						{
-							
-							
+						{							
 							case "next":
 								pageNum += 1;
 								if(pageNum > 4)
@@ -55,12 +56,11 @@ public class Main implements Runnable{
 									pageNum = 4;
 									System.out.println(tc.DisplayAllTickets(pageNum));
 
-									input = sc.nextLine();
-									break;
+									//input = sc.next();
 								}
 								System.out.println(tc.DisplayAllTickets(pageNum));
-								System.out.println("Next/Prev to change pages\nBack to leave this menu");
-								input = sc.nextLine();
+								System.out.println("Next/Prev to change pages\r\nBack to leave this menu");
+								input = sc.next();
 								
 								break;
 								
@@ -71,42 +71,67 @@ public class Main implements Runnable{
 									System.out.println("Cannot go below 1 page(s)");
 									pageNum = 1;
 									System.out.println(tc.DisplayAllTickets(pageNum));
-									input = sc.nextLine();
-
-									break;
+									//input = sc.next();
 								}
 								System.out.println(tc.DisplayAllTickets(pageNum));
-								System.out.println("Next/Prev to change pages\nBack to leave this menu");
-								input = sc.nextLine();
+								System.out.println("Next/Prev to change pages\r\nBack to leave this menu");
+								input = sc.next();
 
 								break;
 
 								
 							case "back":
-								System.out.print("Welcome to Zendesk Assessment.\nSelect a command to continue."
-										+ "Valid Commands:\n"
-										+ "All Tickets\n"
-										+ "Single Ticket\n"
-										+ "To change pages select a number 1-4\n"
-										+ "Exit - allows you end the program");
-								flag2 = false;
+								/*System.out.print("Welcome to Zendesk Assessment.\nSelect a command to continue."
+										+ "Valid Commands:\r\n"
+										+ "All Tickets\r\n"
+										+ "Single Ticket\r\n"
+										+ "Exit - allows you end the program");*/
+								allTicketsFlag = false;
 								break;
 								
 							case "default":
 								System.out.println("Unknown command please select a valid command\n Next, Prev, Back are the only valid commands");	
-								input = sc.nextLine();
+								input = sc.next();
 								break;
 						
 						}
-					}while(flag2);
+					}while(allTicketsFlag);
 						
 					
 					break;
 					
-				case "singleticket":
+				case "single ticket":
 					System.out.println("Select a ticket number");
 					ticketNum = sc.nextInt();
 					System.out.println(tc.GetSingleTicket(ticketNum));
+					
+					do
+					{
+						
+						System.out.println("Select another ticket or go back");
+						
+						input = sc.next();
+
+						if(input.equals("back"))
+						{
+							System.out.print("Welcome to Zendesk Assessment.\nSelect a command to continue."
+									+ "Valid Commands:\r\n"
+									+ "All Tickets\r\n"
+									+ "Single Ticket\r\n"
+									+ "Exit - allows you end the program");
+							singleTicketFlag = false;
+							break;	
+						}
+						//We check if the input cna be parsed as an int if so it should be bigger than the samllest possible value
+						else if(Integer.parseInt(input) > Integer.MIN_VALUE)
+						{
+							System.out.println(tc.GetSingleTicket(Integer.parseInt(input)));
+						}
+						else
+						{
+							System.out.println("Command not avaiable try again");
+						}
+					}while(singleTicketFlag);
 					break;
 					
 				case "exit":
@@ -116,24 +141,22 @@ public class Main implements Runnable{
 					break;
 				
 					//brings user back to the main menu
-				case "back":
-					System.out.print("Welcome to Zendesk Assessment.\nSelect a command to continue."
+				/*case "back":
+					System.out.print("Welcome to Zendesk Assessment.\r\nSelect a command to continue."
 							+ "Valid Commands:\n"
-							+ "All Tickets\n"
-							+ "Single Ticket\n"
-							+ "To change pages select a number 1-4\n"
+							+ "All Tickets\r\n"
+							+ "Single Ticket\r\n"
 							+ "Exit - allows you end the program");
 					flag = false;
 					
 					break;
 					
-					
+					*/
 				default:
 					System.out.println("Unknown command please select a valid command");	
 					System.out.println("Select a command to continue\nValid Commands\r\n" + 
 							"All Tickets\r\n" + 
 							"Single Ticket\r\n" + 
-							"To change pages select a number 1-4\r\n" + 
 							"Exit - allows you end the program");
 					
 					break;
@@ -142,18 +165,5 @@ public class Main implements Runnable{
 		
 
 	}
-	//TODO move INIT() Into here
-	@Option(names = { "-s", "--font-size" }, description = "Font size") 
-    int fontSize = 19;
 
-    @Parameters(paramLabel = "<word>", defaultValue = "Hello, picocli", 
-               description = "Words to be translated into ASCII art.")
-    private String[] words = { "Hello,", "picocli" }; 
-
-    @Override
-    public void run() { 
-        // The business logic of the command goes here...
-        // In this case, code for generation of ASCII art graphics
-        // (omitted for the sake of brevity).
-    }
 }
