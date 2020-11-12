@@ -7,10 +7,12 @@ The second class is the TicketController class which uses the Zendesk java class
 The use of this class made it much easier to use the api and manipulate the data. 
 
 Theses are the main commands available for this project.
-alltickets - displays all the tickets 25 at a time.
+alltickets(displays all the tickets 25 at a time)
+  
   -next - allows to move up the pages
   -prev - allows to move down the pages
   -back - allows you to go back to the main menu
+
 singleticket
   -[ticketNumber] - Select a ticket number 
  
