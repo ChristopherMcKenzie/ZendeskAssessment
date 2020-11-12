@@ -14,7 +14,8 @@ Theses are the main commands available for this project.
 -back <br>
 
 singleticket <br>
--[ticketNumber] - Select a ticket number 
+-[ticketNumber] - Select a ticket number <br>
+-back 
  
 exit 
 - Exits the program
