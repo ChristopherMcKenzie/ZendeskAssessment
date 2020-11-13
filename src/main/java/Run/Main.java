@@ -20,7 +20,7 @@ public class Main{
 		System.out.print("Welcome to Zendesk Assessment.\r\nSelect a command to continue\r\nValid Commands\r\n"
 				+ "All Tickets\r\n"
 				+ "Single Ticket\r\n"
-				+ "Exit - allows you end the program");
+				+ "Exit - allows you end the program\r\n");
 		
 		int ticketNum;
 		int pageNum = 1;
@@ -54,9 +54,6 @@ public class Main{
 								{
 									System.out.println("Cannot go above 4 page(s)");
 									pageNum = 4;
-									System.out.println(tc.DisplayAllTickets(pageNum));
-
-									//input = sc.next();
 								}
 								System.out.println(tc.DisplayAllTickets(pageNum));
 								System.out.println("Next/Prev to change pages\r\nBack to leave this menu");
@@ -70,8 +67,6 @@ public class Main{
 								{
 									System.out.println("Cannot go below 1 page(s)");
 									pageNum = 1;
-									System.out.println(tc.DisplayAllTickets(pageNum));
-									//input = sc.next();
 								}
 								System.out.println(tc.DisplayAllTickets(pageNum));
 								System.out.println("Next/Prev to change pages\r\nBack to leave this menu");
@@ -81,11 +76,6 @@ public class Main{
 
 								
 							case "back":
-								/*System.out.print("Welcome to Zendesk Assessment.\nSelect a command to continue."
-										+ "Valid Commands:\r\n"
-										+ "All Tickets\r\n"
-										+ "Single Ticket\r\n"
-										+ "Exit - allows you end the program");*/
 								allTicketsFlag = false;
 								break;
 								
@@ -113,24 +103,14 @@ public class Main{
 						input = sc.next();
 
 						if(input.equals("back"))
-						{
-							System.out.print("Welcome to Zendesk Assessment.\nSelect a command to continue."
-									+ "Valid Commands:\r\n"
-									+ "All Tickets\r\n"
-									+ "Single Ticket\r\n"
-									+ "Exit - allows you end the program");
-							singleTicketFlag = false;
 							break;	
-						}
+						
 						//We check if the input cna be parsed as an int if so it should be bigger than the samllest possible value
 						else if(Integer.parseInt(input) > Integer.MIN_VALUE)
-						{
 							System.out.println(tc.GetSingleTicket(Integer.parseInt(input)));
-						}
+						
 						else
-						{
 							System.out.println("Command not avaiable try again");
-						}
 					}while(singleTicketFlag);
 					break;
 					
@@ -139,19 +119,7 @@ public class Main{
 					sc.close();
 					System.exit(0);
 					break;
-				
-					//brings user back to the main menu
-				/*case "back":
-					System.out.print("Welcome to Zendesk Assessment.\r\nSelect a command to continue."
-							+ "Valid Commands:\n"
-							+ "All Tickets\r\n"
-							+ "Single Ticket\r\n"
-							+ "Exit - allows you end the program");
-					flag = false;
-					
-					break;
-					
-					*/
+
 				default:
 					System.out.println("Unknown command please select a valid command");	
 					System.out.println("Select a command to continue\nValid Commands\r\n" + 
