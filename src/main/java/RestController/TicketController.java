@@ -40,6 +40,7 @@ public class TicketController {
 
 	}
 	
+	//We load them all in once 
 	public List<Ticket> GetAllTickets()
 	{
 		try
@@ -77,8 +78,11 @@ public class TicketController {
 	{
 		try
 		{
-			GetAllTickets();
-			//We start at one since we have an empty ticket as the first value we don't want to display that
+			if(allTickets == null)
+			{
+				GetAllTickets();
+			}
+				//We start at one since we have an empty ticket as the first value we don't want to display that
 			//TODO fix this for the better
 			//make a sublist
 			//when command next or previous is called change the values in the sublist
@@ -105,7 +109,10 @@ public class TicketController {
 		//Check if an ID actually
 		try
 		{
-			GetAllTickets();
+			if(allTickets == null)
+			{
+				GetAllTickets();
+			}
 			//return allTickets.get(ticketID).toString();
 			return toString(allTickets.get(ticketID));
 		}
